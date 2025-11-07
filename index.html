@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Base</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f0 100%);
+            min-height: 100vh;
+            color: #1e293b;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .logo-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .logo-text p {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .upload-btn {
+            padding: 10px 20px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .upload-btn:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .search-section {
+            margin-bottom: 48px;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-glow {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(168, 85, 247, 0.2));
+            filter: blur(60px);
+            z-index: -1;
+        }
+
+        .search-box {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            overflow: hidden;
+        }
+
+        .search-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .search-icon {
+            width: 20px;
+            height: 20px;
+            color: #94a3b8;
+        }
+
+        #searchInput {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: #0f172a;
+        }
+
+        #searchInput::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-btn {
+            padding: 10px 24px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-btn:hover:not(:disabled) {
+            background: #2563eb;
+        }
+
+        .search-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        #results {
+            padding: 24px;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 48px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .answer {
+            color: #334155;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .sources-section {
+            padding-top: 24px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .sources-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 12px;
+        }
+
+        .source-item {
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+
+        .source-item:hover {
+            border-color: #3b82f6;
+            transform: translateY(-1px);
+        }
+
+        .source-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .source-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #0f172a;
+        }
+
+        .source-score {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .source-excerpt {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.6;
+        }
+
+        .documents-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+
+        #progressBar {
+            padding: 16px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .doc-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .doc-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .doc-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .doc-icon {
+            width: 40px;
+            height: 40px;
+            background: #eff6ff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .doc-card:hover .doc-icon {
+            background: #dbeafe;
+        }
+
+        .delete-btn {
+            padding: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            border-radius: 4px;
+        }
+
+        .doc-card:hover .delete-btn {
+            opacity: 1;
+        }
+
+        .delete-btn:hover {
+            background: #f1f5f9;
+        }
+
+        .doc-name {
+            font-weight: 500;
+            color: #0f172a;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .doc-meta {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 64px 24px;
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            background: #f1f5f9;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: white;">
+                        <path d="M12 3l9 4.5v9L12 21l-9-4.5v-9L12 3z"/>
+                        <path d="M12 12l9-4.5M12 12v9M12 12L3 7.5"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>Knowledge Base</h1>
+                    <p><span id="docCount">0</span> documents indexed</p>
+                </div>
+            </div>
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                📤 Upload
+            </button>
+            <input type="file" id="fileInput" accept=".txt,.pdf,.md" multiple style="display: none;">
+        </div>
+    </header>
+
+    <main>
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-glow"></div>
+                <div class="search-box">
+                    <div class="search-input-wrapper">
+                        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="Ask anything about your documents...">
+                        <button class="search-btn" id="searchBtn">Search</button>
+                    </div>
+                    <div id="results"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="documents-section">
+            <h2>Your Documents</h2>
+            <div id="progressBar">
+                <div class="spinner" style="width: 20px; height: 20px; border-width: 2px;"></div>
+                <span style="color: #1e40af; font-size: 14px;">Processing document...</span>
+            </div>
+            <div id="documentsGrid" class="documents-grid"></div>
+        </div>
+    </main>
+
+    <script>
+        const API_URL = 'http://localhost:5000/api';
+        let documents = [];
+
+        // File upload
+        document.getElementById('fileInput').addEventListener('change', async (e) => {
+            const files = Array.from(e.target.files);
+            for (const file of files) {
+                await uploadDocument(file);
+            }
+            e.target.value = '';
+        });
+
+        async function uploadDocument(file) {
+            document.getElementById('progressBar').style.display = 'flex';
+            
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch(`${API_URL}/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const doc = await response.json();
+                documents.push(doc);
+                renderDocuments();
+            } catch (error) {
+                console.error('Upload failed:', error);
+                alert('Failed to upload document');
+            } finally {
+                document.getElementById('progressBar').style.display = 'none';
+            }
+        }
+
+        // Search
+        document.getElementById('searchBtn').addEventListener('click', search);
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') search();
+        });
+
+        async function search() {
+            const query = document.getElementById('searchInput').value.trim();
+            if (!query) return;
+
+            const resultsDiv = document.getElementById('results');
+            const searchBtn = document.getElementById('searchBtn');
+            
+            searchBtn.disabled = true;
+            searchBtn.textContent = 'Searching...';
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p style="color: #64748b; font-size: 14px;">Searching your knowledge base...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${API_URL}/search`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query, top_k: 5 })
+                });
+
+                const data = await response.json();
+                displayResults(data);
+            } catch (error) {
+                console.error('Search failed:', error);
+                resultsDiv.innerHTML = '<p style="color: #ef4444; padding: 24px;">Search failed. Please try again.</p>';
+            } finally {
+                searchBtn.disabled = false;
+                searchBtn.textContent = 'Search';
+            }
+        }
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            
+            const sourcesHTML = data.sources.map(source => `
+                <div class="source-item">
+                    <div class="source-header">
+                        <span class="source-name">${source.docName}</span>
+                        <span class="source-score">${Math.round(source.score * 100)}% match</span>
+                    </div>
+                    <p class="source-excerpt">${source.excerpt}</p>
+                </div>
+            `).join('');
+
+            resultsDiv.innerHTML = `
+                <div class="answer">${data.answer}</div>
+                <div class="sources-section">
+                    <div class="sources-title">Sources</div>
+                    ${sourcesHTML}
+                </div>
+            `;
+        }
+
+        // Load documents on page load
+        async function loadDocuments() {
+            try {
+                const response = await fetch(`${API_URL}/documents`);
+                documents = await response.json();
+                renderDocuments();
+            } catch (error) {
+                console.error('Failed to load documents:', error);
+            }
+        }
+
+        function renderDocuments() {
+            const grid = document.getElementById('documentsGrid');
+            document.getElementById('docCount').textContent = documents.length;
+
+            if (documents.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1 / -1;">
+                        <div class="empty-icon">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #94a3b8;">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <h3>No documents yet</h3>
+                        <p>Upload your first document to get started</p>
+                        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                            Upload Document
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = documents.map(doc => `
+                <div class="doc-card">
+                    <div class="doc-header">
+                        <div class="doc-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #3b82f6;">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                        </div>
+                        <button class="delete-btn" onclick="deleteDocument(${doc.id})" title="Delete">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #94a3b8;">
+                                <path d="M18 6L6 18M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="doc-name">${doc.name}</div>
+                    <div class="doc-meta">${doc.size} · ${doc.chunks} chunks</div>
+                </div>
+            `).join('');
+        }
+
+        async function deleteDocument(docId) {
+            if (!confirm('Delete this document?')) return;
+
+            try {
+                await fetch(`${API_URL}/documents/${docId}`, {
+                    method: 'DELETE'
+                });
+                documents = documents.filter(d => d.id !== docId);
+                renderDocuments();
+            } catch (error) {
+                console.error('Delete failed:', error);
+                alert('Failed to delete document');
+            }
+        }
+
+        // Initialize
+        loadDocuments();
+    </script>
+</body>
+</html>
