@@ -6,7 +6,7 @@ A clean, minimalist Retrieval-Augmented Generation (RAG) system built with vanil
 ![Frontend](https://img.shields.io/badge/Frontend-Vanilla%20JS-yellow.svg)
 ![Database](https://img.shields.io/badge/Database-SQLite-green.svg)
 
-## 🎯 Project Goal
+##  Project Goal
 
 Learn RAG fundamentals by building a practical, real-world application where you can:
 - Upload documents (PDF, TXT, Markdown)
@@ -16,14 +16,14 @@ Learn RAG fundamentals by building a practical, real-world application where you
 
 ## ✨ Features
 
-- **📤 Document Upload**: Supports PDF, TXT, and Markdown files
-- **🔍 Semantic Search**: Uses sentence transformers for accurate retrieval
-- **💾 Local Storage**: Everything stored in SQLite—no cloud dependencies
-- **🎨 Apple-Style UI**: Clean, modern interface inspired by iCloud.com
-- **⚡ Fast & Lightweight**: Runs entirely on your machine
-- **🔒 Privacy First**: No data leaves your computer
+- **Document Upload**: Supports PDF, TXT, and Markdown files
+- **Semantic Search**: Uses sentence transformers for accurate retrieval
+- **Local Storage**: Everything stored in SQLite—no cloud dependencies
+- **Apple-Style UI**: Clean, modern interface inspired by iCloud.com
+- ** Fast & Lightweight**: Runs entirely on your machine
+- **Privacy First**: No data leaves your computer
 
-## 🏗️ Architecture
+## Architecture
 
 ### How RAG Works
 
@@ -61,7 +61,7 @@ Learn RAG fundamentals by building a practical, real-world application where you
 - **CSS3**: Modern glassmorphism effects
 - **HTML5**: Semantic markup
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 rag-system/
@@ -79,7 +79,7 @@ rag-system/
     └── knowledge.db        # SQLite database
 ```
 
-## 🚀 Installation
+## Installation
 
 ### Prerequisites
 
@@ -132,7 +132,7 @@ Model loaded successfully!
  * Running on http://127.0.0.1:5000
 ```
 
-## 🎮 Usage
+## Usage
 
 ### Starting the Application
 
@@ -174,7 +174,7 @@ Type a question in the search bar and hit Enter or click "Search":
 - Hover over a document card to see the delete button
 - Click delete to remove a document and all its chunks
 
-## 🔧 Configuration
+## Configuration
 
 ### Chunking Strategy
 
@@ -215,7 +215,7 @@ def search():
     top_k = data.get('top_k', 5)  # Change this number
 ```
 
-## 📊 Database Schema
+## Database Schema
 
 ### Documents Table
 ```sql
@@ -241,7 +241,7 @@ CREATE TABLE chunks (
 
 Embeddings are stored as binary blobs (float32 arrays) for efficiency.
 
-## 🎓 Learning Path
+## Learning Path
 
 This project is designed for progressive learning:
 
@@ -272,7 +272,7 @@ This project is designed for progressive learning:
 - [ ] Monitoring and analytics
 - [ ] Upgrade to vector database (pgvector, Qdrant)
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Backend won't start
 
@@ -333,7 +333,7 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB
 - Try more specific questions
 - Include keywords from your documents
 
-## 🚀 Performance Tips
+## Performance Tips
 
 ### Faster Uploads
 - Use `.txt` files instead of PDFs when possible
@@ -351,14 +351,14 @@ app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50MB
 sqlite3 data/knowledge.db "VACUUM;"
 ```
 
-## 🔐 Privacy & Security
+## Privacy & Security
 
 - **All data stays local**: No external API calls
 - **No tracking**: No analytics or telemetry
 - **Secure by default**: No authentication required (single-user)
 - **Data portability**: SQLite database is easily backed up
 
-## 📝 API Reference
+##  API Reference
 
 ### POST `/api/upload`
 Upload and process a document.
@@ -430,7 +430,7 @@ Delete a document and its chunks.
 }
 ```
 
-## 🤝 Contributing
+## Contributing
 
 This is a learning project! Feel free to:
 - Experiment with different chunking strategies
@@ -438,7 +438,7 @@ This is a learning project! Feel free to:
 - Add new features (tagging, filtering, etc.)
 - Improve the UI/UX
 
-## 📚 Resources
+## Resources
 
 ### Learn More About RAG
 - [Anthropic's RAG Guide](https://docs.anthropic.com/claude/docs/retrieval-augmented-generation)
@@ -453,11 +453,11 @@ This is a learning project! Feel free to:
 - [Understanding Cosine Similarity](https://en.wikipedia.org/wiki/Cosine_similarity)
 - [Vector Database Comparison](https://github.com/erikbern/ann-benchmarks)
 
-## 📄 License
+## License
 
 This project is open source and available for educational purposes. Use it to learn, modify it, and build something awesome!
 
-## 🎉 Acknowledgments
+## Acknowledgments
 
 - Built as a clean, minimal RAG learning project
 - UI inspired by Apple's iCloud design language
@@ -466,6 +466,6 @@ This project is open source and available for educational purposes. Use it to le
 
 ---
 
-**Happy Learning! 🚀**
+**Happy Learning! **
 
 Questions? Issues? This is a learning project—break things, fix things, and learn!
