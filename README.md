@@ -14,7 +14,7 @@ Learn RAG fundamentals by building a practical, real-world application where you
 - Get AI-powered answers with source citations
 - Keep everything local and private
 
-## ✨ Features
+##  Features
 
 - **Document Upload**: Supports PDF, TXT, and Markdown files
 - **Semantic Search**: Uses sentence transformers for accurate retrieval
